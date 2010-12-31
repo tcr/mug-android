@@ -13,7 +13,7 @@ exports.getMainActivity = function () {
 			
 			var toast = Toast.makeText(
 				activity.getApplicationContext(),
-				"Thank you very much!",
+				"Welcome to JavaScript on Android.",
 				Toast.LENGTH_SHORT
 			);
 			toast.show();
