@@ -2,21 +2,23 @@ var java = require("java")
 var TextView = java.import("android.widget.TextView")
 var Toast = java.import("android.widget.Toast")
 
+var AAA = 0x88FFFF00;
+
 exports.getMainActivity = function () {
-	return new java.Proxy("mug.android.ActivityListener",
-	{
-		onCreate: function (activity, bundle) {
-			var view = new TextView(activity);
-			activity.setContentView(view);
+	return {
+		onCreate: function (bundle) {
+			var view = new TextView(this);
+			this.setContentView(view);
 			view.append("Welcome to Mug on Android!");
-			view.setBackgroundColor(0x88FFFF00);
+			view.setTextColor(0xFF000000);
+			view.setBackgroundColor(0xFFFF0000);
 			
 			var toast = Toast.makeText(
-				activity.getApplicationContext(),
+				this.getApplicationContext(),
 				"This is an alert!",
 				Toast.LENGTH_SHORT
 			);
 			toast.show();
 		}
-	});
+	};
 }
