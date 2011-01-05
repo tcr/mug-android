@@ -5,7 +5,6 @@ import java.util.UUID;
 import mug.Modules;
 import mug.js.JSFunction;
 import mug.js.JSObject;
-import mug.modules.java.JSJavaObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,12 +1,15 @@
 package mug.android;
 
+import mug.Modules;
+import mug.js.JSModule;
 import mug.js.JSObject;
-import mug.modules.java.JSJavaObject;
+import mug.modules.java;
+import mug.modules.java.ReflectedJSJavaObject;
 import android.app.Activity;
 import android.os.Bundle;
 
 public class MugAndroidActivity extends Activity {
-	JSJavaObject wrapper;
+	ReflectedJSJavaObject wrapper;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,13 +24,19 @@ public class MugAndroidActivity extends Activity {
         	this.finishActivity(2);
         
         // create new JSJavaObject
-        wrapper = new JSJavaObject(listener.getProto(), this);
+        java java = new mug.modules.java();
+        try {
+			java.load();
+		} catch (Exception e1) {
+		}
+        wrapper = java.new ReflectedJSJavaObject(listener.getProto(), this);
         for (String key : listener.getKeys())
         	wrapper.set(key, listener.get(key));
         
     	try {
-    		((JSObject) wrapper.get("onCreate")).invoke(this);
+    		((JSObject) wrapper.get("onCreate")).invoke(java.new ReflectedJSJavaObject(listener.getProto(), this));
     	} catch (Exception e) {
+    		e.printStackTrace();
     	}
     }
     
