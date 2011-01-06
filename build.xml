@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="package_all" name="MugAndroid Packager">
     <target name="app_js_jar">
-        <java classpath="mug.jar" classname="mug.Compiler" fork="true">
-        	<arg line="--output lib/" />
+        <java classpath="mug.jar" classname="mug.Compiler" fork="true" dir="assets/scripts/">
+        	<arg line="--output ../../lib/" />
 	        <arg line="--jar app-js.jar" />
-	        <arg line="assets/scripts/" />
+        	<arg line="--package mug.android" />
+	        <arg line="." />
         </java>
     </target>
 

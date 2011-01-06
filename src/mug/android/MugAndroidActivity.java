@@ -1,10 +1,7 @@
 package mug.android;
 
-import mug.Modules;
-import mug.js.JSModule;
 import mug.js.JSObject;
-import mug.modules.java;
-import mug.modules.java.ReflectedJSJavaObject;
+import mug.js.java.ReflectedJSJavaObject;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -23,18 +20,13 @@ public class MugAndroidActivity extends Activity {
         if (listener == null)
         	this.finishActivity(2);
         
-        // create new JSJavaObject
-        java java = new mug.modules.java();
-        try {
-			java.load();
-		} catch (Exception e1) {
-		}
-        wrapper = java.new ReflectedJSJavaObject(listener.getProto(), this);
+        // create new wrapped listener
+        wrapper = new ReflectedJSJavaObject(listener.getEnvironment(), this);
         for (String key : listener.getKeys())
         	wrapper.set(key, listener.get(key));
         
     	try {
-    		((JSObject) wrapper.get("onCreate")).invoke(java.new ReflectedJSJavaObject(listener.getProto(), this));
+    		((JSObject) wrapper.get("onCreate")).invoke(wrapper);
     	} catch (Exception e) {
     		e.printStackTrace();
     	}

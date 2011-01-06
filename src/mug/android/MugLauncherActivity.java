@@ -2,13 +2,12 @@ package mug.android;
 
 import java.util.UUID;
 
-import mug.Modules;
 import mug.js.JSFunction;
+import mug.js.JSModule;
 import mug.js.JSObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 public class MugLauncherActivity extends Activity {
     @Override
@@ -17,8 +16,9 @@ public class MugLauncherActivity extends Activity {
         
         // run script and get listener
         try {
-        	JSObject test = Modules.getModule("main").load();
-			JSObject listener = (JSObject) ((JSFunction) test.get("getMainActivity")).invoke(null);
+        	JSModule module = new mug.android.main();
+        	JSObject exports = module.load();
+			JSObject listener = (JSObject) ((JSFunction) exports.get("getMainActivity")).invoke(null);
 			
 			// save to state
 			String activityId = UUID.randomUUID().toString();
