@@ -1,11 +1,13 @@
 var java = require("java")
 var TextView = java.import("android.widget.TextView")
 var Toast = java.import("android.widget.Toast")
-
-var AAA = 0x88FFFF00;
+var Handler = java.import("android.os.Handler")
+var Log = java.import("android.util.Log")
 
 exports.getMainActivity = function () {
 	return {
+		handler: new Handler(),
+		
 		onCreate: function (bundle) {
 			var view = new TextView(this);
 			this.setContentView(view);
@@ -19,6 +21,13 @@ exports.getMainActivity = function () {
 				Toast.LENGTH_SHORT
 			);
 			toast.show();
+			
+			var activity = this
+			setInterval(function () {
+				activity.handler.post(function () {
+					view.append("\nUI Thread update!")
+				});
+			}, 1000);
 		}
 	};
 }

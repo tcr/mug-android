@@ -1,6 +1,7 @@
 package mug.android;
 
 import mug.js.JSObject;
+import mug.js.JSTimers;
 import mug.js.java.ReflectedJSJavaObject;
 import android.app.Activity;
 import android.os.Bundle;
@@ -30,6 +31,17 @@ public class MugAndroidActivity extends Activity {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
+    	
+    	(new Thread() {
+    		public void run() {
+		    	try {
+					JSTimers.yieldForTimers();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    		}
+    	}).start();
     }
     
     protected void onStart() {
